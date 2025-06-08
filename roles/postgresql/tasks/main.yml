@@ -1,0 +1,45 @@
+---
+- name: Instalar dependencias para adicionar repositorio PostgreSQL
+  apt:
+    name:
+      - wget
+      - ca-certificates
+      - gnupg
+      - lsb-release
+    state: present
+    update_cache: yes
+
+
+- name: Adicionar chave do repositório PostgreSQL
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+
+
+- name: Adicionar repositório PostgreSQL 16
+  apt_repository:
+    repo: "deb http://apt.postgresql.org/pub/repos/apt {{ ansible_lsb.codename | lower  }}-pgdg main"
+    state: present
+    filename: 'pgdg'
+
+
+- name: Atualizar cache do apt
+  apt:
+    update_cache: yes
+
+
+- name: Instalar PostgreSQL 16
+  apt:
+    name: postgresql-16
+    state: present
+
+
+- name: Garantir que o PostgreSQL está a correr e ativado
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
+  notify: Reiniciar PostgreSQL
+
+
+ # tasks file for roles/postgresql

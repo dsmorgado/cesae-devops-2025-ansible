@@ -1,0 +1,6 @@
+---
+- name: Reiniciar PostgreSQL
+  service:
+    name: postgresql
+    state: restarted
+# handlers file for roles/postgresql

@@ -20,15 +20,20 @@
 192.168.64.19
 
 [db]
-192.168.64.20
+10.0.2.15
 
 #[redis]
 #192.168.64.21 ansible_ssh_private_key_file=/home/ubuntu/minha_chave/chave001
 
 [web:vars]
 ansible_user=ubuntu
-ansible_password=1234566
+ansible_ssh_pass=12345
+ansible_ssh_common_args='-o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=no'
 
+[db:vars]
+ansible_user=ubuntu
+ansible_ssh_pass=12345
+ansible_ssh_common_args='-o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=no'
 # Ex 2: A collection of hosts belonging to the 'webservers' group:
 
 ## [webservers]
